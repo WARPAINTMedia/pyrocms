@@ -1,6 +1,7 @@
 # Multiple Environment config
 # Set this to development, staging or production
 # SetEnv PYRO_ENV production
+# SetEnvIf Server_Addr "0.0.0.0" PYRO_ENV=production
 
 <IfModule mod_rewrite.c>
 
