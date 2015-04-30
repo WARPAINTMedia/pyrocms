@@ -12,7 +12,7 @@ class Search_index_m extends MY_Model
 	 * Index
 	 *
 	 * Store an entry in the search index.
-	 * 
+	 *
 	 * <code>
 	 * $this->search_index_m->index(
      *     'blog',
@@ -25,12 +25,12 @@ class Search_index_m extends MY_Model
      *     array(
      *         'cp_edit_uri'    => 'admin/blog/edit/'.$id,
      *         'cp_delete_uri'  => 'admin/blog/delete/'.$id,
-     *         'keywords'       => $post->keywords, 
+     *         'keywords'       => $post->keywords,
      *     )
      * );
      * </code>
 	 *
-	 * @param	string	$module		The module that owns this entry 
+	 * @param	string	$module		The module that owns this entry
 	 * @param	string	$singular	The unique singular language key for this piece of data
 	 * @param	string	$plural		The unique plural language key that describes many pieces of this data
 	 * @param	int 	$entry_id	The id for this entry
@@ -93,7 +93,7 @@ class Search_index_m extends MY_Model
 	 * $this->search_index_m->drop_index('blog', 'blog:post', $id);
 	 * </code>
 	 *
-	 * @param	string	$module		The module that owns this entry 
+	 * @param	string	$module		The module that owns this entry
 	 * @param	string	$singular	The unique singular "key" for this piece of data
 	 * @param	int 	$entry_id	The id for this entry
 	 * @return	array
@@ -124,7 +124,7 @@ class Search_index_m extends MY_Model
 		{
 			return $this;
 		}
-		
+
 		$this->db->or_group_start();
 
 		foreach ($filter as $module => $plural)
@@ -167,7 +167,7 @@ class Search_index_m extends MY_Model
 	public function search($query)
 	{
 		return $this->db
-			->select('title, description, keywords, module, entry_key, entry_plural, uri, cp_edit_uri')
+			->select('title, description, keywords, module, entry_key, entry_plural, entry_id, uri, cp_edit_uri')
 			->select('MATCH(title, description, keywords) AGAINST ("*'.$this->db->escape_str($query).'*" IN BOOLEAN MODE) as bool_relevance', false)
 			->select('MATCH(title, description, keywords) AGAINST ("*'.$this->db->escape_str($query).'*") AS relevance', false)
 			->having('bool_relevance > 0')
