@@ -58,6 +58,9 @@ class Events_Templates {
             $this->ci->email->from($from, $from_name);
             $this->ci->email->reply_to($reply_to);
             $this->ci->email->to($to);
+      			if (!empty($data['cc'])) {
+              $this->ci->email->cc($data['cc']);
+            }
             $this->ci->email->subject($subject);
             $this->ci->email->message($body);
 			
