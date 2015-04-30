@@ -10,6 +10,7 @@
  */
 class MY_Image_lib extends CI_Image_lib
 {
+  public $image_library		= 'imagemagick'; // 'gd2';
 	/**
 	 * Image Process Using GD/GD2
 	 *
