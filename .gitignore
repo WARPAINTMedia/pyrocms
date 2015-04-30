@@ -4,13 +4,14 @@
 .settings
 .idea
 assets/cache/*
-assets/cache/index.html
+!assets/cache/index.html
 assets/page_types/*
 !assets/page_types/.htaccess
 !assets/page_types/default/
 assets/page_types/default/*
 !assets/page_types/default/.htaccess
 system/cms/cache/*
+!system/cms/cache/index.html
 system/cms/config/database.php
 system/cms/logs/log-*.php
 nbproject/
