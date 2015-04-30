@@ -10,7 +10,7 @@
 class Events_Search
 {
     protected $ci;
-    
+
     public function __construct()
     {
         $this->ci =& get_instance();
@@ -28,7 +28,7 @@ class Events_Search
         Events::register('page_updated', array($this, 'index_page'));
         Events::register('page_deleted', array($this, 'drop_page'));
     }
-    
+
     public function index_post($id)
     {
     	$this->ci->load->model('blog/blog_m');
@@ -38,14 +38,15 @@ class Events_Search
     	// Only index live articles
     	if ($post->status === 'live')
     	{
+            $content = (empty($post->intro)) ? $post->body: $post->intro;
     		$this->ci->search_index_m->index(
-    			'blog', 
-    			'blog:post', 
-    			'blog:posts', 
+    			'blog',
+    			'blog:post',
+    			'blog:posts',
     			$id,
     			'blog/'.date('Y/m/', $post->created_on).$post->slug,
     			$post->title,
-    			$post->body, 
+    			$content,
     			array(
     				'cp_edit_uri' 	=> 'admin/blog/edit/'.$id,
     				'cp_delete_uri' => 'admin/blog/delete/'.$id,
@@ -67,7 +68,7 @@ class Events_Search
 			$this->ci->search_index_m->drop_index('blog', 'blog:post', $id);
 		}
 	}
-    
+
     public function index_page($id)
     {
     	$this->ci->load->model('pages/page_m');
@@ -79,13 +80,13 @@ class Events_Search
     	if ($page->status === 'live')
     	{
     		$this->ci->search_index_m->index(
-    			'pages', 
-    			'pages:page', 
-    			'pages:pages', 
+    			'pages',
+    			'pages:page',
+    			'pages:pages',
     			$id,
     			$page->uri,
     			$page->title,
-    			$page->meta_description ? $page->meta_description : null, 
+    			$page->meta_description ? $page->meta_description : null,
     			array(
     				'cp_edit_uri' 	=> 'admin/pages/edit/'.$id,
     				'cp_delete_uri' => 'admin/pages/delete/'.$id,
