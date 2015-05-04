@@ -15,21 +15,21 @@ class Theme_Pyrocms extends Theme {
 																'type'          => 'radio',
 																'options'       => 'yes=Yes|no=No',
 																'is_required'   => true),
-																
+
 									'pyrocms_news_feed' => 			array('title' => 'News Feed',
 																'description'   => 'Would you like to display the news feed on the dashboard?',
 																'default'       => 'yes',
 																'type'          => 'radio',
 																'options'       => 'yes=Yes|no=No',
 																'is_required'   => true),
-																
+
 									'pyrocms_quick_links' => 		array('title' => 'Quick Links',
 																'description'   => 'Would you like to display quick links on the dashboard?',
 																'default'       => 'yes',
 																'type'          => 'radio',
 																'options'       => 'yes=Yes|no=No',
 																'is_required'   => true),
-																
+
 									'pyrocms_analytics_graph' => 	array('title' => 'Analytics Graph',
 																'description'   => 'Would you like to display the graph on the dashboard?',
 																'default'       => 'yes',
@@ -37,7 +37,7 @@ class Theme_Pyrocms extends Theme {
 																'options'       => 'yes=Yes|no=No',
 																'is_required'   => true),
 								   );
-	
+
 	/**
 	 * Run() is triggered when the theme is loaded for use
 	 *
@@ -53,11 +53,11 @@ class Theme_Pyrocms extends Theme {
 		{
 			// don't bother fetching the data if it's turned off in the theme
 			if ($this->theme_options->pyrocms_analytics_graph == 'yes')		self::get_analytics();
-			if ($this->theme_options->pyrocms_news_feed == 'yes')			self::get_rss_feed();
+			// if ($this->theme_options->pyrocms_news_feed == 'yes')			self::get_rss_feed();
 			if ($this->theme_options->pyrocms_recent_comments == 'yes')		self::get_recent_comments();
 		}
 	}
-	
+
 	public function get_analytics()
 	{
 		if ($this->settings->ga_email and $this->settings->ga_password and $this->settings->ga_profile)
@@ -125,7 +125,7 @@ class Theme_Pyrocms extends Theme {
 			$this->template->set($data);
 		}
 	}
-	
+
 	public function get_rss_feed()
 	{
 		// Dashboard RSS feed (using SimplePie)
@@ -137,11 +137,11 @@ class Theme_Pyrocms extends Theme {
 
 		// Store the feed items
 		$data['rss_items'] = $this->simplepie->get_items(0, $this->settings->dashboard_rss_count);
-		
+
 		// you know
 		$this->template->set($data);
 	}
-	
+
 	public function get_recent_comments()
 	{
 		$this->load->library('comments/comments');
@@ -153,7 +153,7 @@ class Theme_Pyrocms extends Theme {
 
 		$recent_comments = $this->comment_m->get_recent(5);
 		$data['recent_comments'] = $this->comments->process($recent_comments);
-		
+
 		$this->template->set($data);
 	}
 }
